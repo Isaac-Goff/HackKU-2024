@@ -22,7 +22,7 @@ class SentimentAnalyst:
 
         self.rake.extract_keywords_from_text(text)
         keywords = self.rake.get_ranked_phrases()
-        print(keywords)
+        return keywords
 
     def process_text(self, text):
         tokens = word_tokenize(text)
@@ -37,20 +37,30 @@ class SentimentAnalyst:
         processed_text = self.process_text(text)
         scores = self.analyzer.polarity_scores(processed_text)
         sentiment = 1 if scores['pos'] > 0 else 0
-        return sentiment
+        return scores
+
+    def compare_keywords(self, website_text, reliable_text):
+        score = 0
+        website_keywords = self.find_keywords(website_text)
+        reliable_keywords = self.find_keywords(reliable_text)
+        for webword in website_keywords:
+            if webword in reliable_keywords:
+                score += 1
+
+        percent_score = (score / len(website_keywords)) * 100
+        return score,len (website_keywords), percent_score
+
+    def compare_sentiment(self, website_text, reliable_text):
+        pass
 
 
-
+textList = ['You can form a powerful keyword extraction method by '
+            'combining the Rapid Automatic Keyword Extraction (RAKE) '
+            'algorithm with the NLTK toolkit. It is known as rake-nltk. '
+            'It is a modified version of this algorithm. You can know '
+            'more about rake-nltk here.Install the rake-nltk library '
+            'using pip install rake-nltk.',
+            'First, we’ll import the necessary libraries for text analysis and sentiment analysis, such as pandas for data handling, nltk for natural language processing, and SentimentIntensityAnalyzer for sentiment analysis.']
 sentimentAnalyser = SentimentAnalyst()
-sentimentAnalyser.find_keywords('You can form a powerful keyword extraction method by '
-                                'combining the Rapid Automatic Keyword Extraction (RAKE) '
-                                'algorithm with the NLTK toolkit. It is known as rake-nltk. '
-                                'It is a modified version of this algorithm. You can know '
-                                'more about rake-nltk here.Install the rake-nltk library '
-                                'using pip install rake-nltk.')
-print(sentimentAnalyser.analyze_sentiment('You can form a powerful keyword extraction method by '
-                                'combining the Rapid Automatic Keyword Extraction (RAKE) '
-                                'algorithm with the NLTK toolkit. It is known as rake-nltk. '
-                                'It is a modified version of this algorithm. You can know '
-                                'more about rake-nltk here.Install the rake-nltk library '
-                                'using pip install rake-nltk.'))
+
+print(sentimentAnalyser.compare_keywords(textList[0], textList[1]))
