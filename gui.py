@@ -1,18 +1,24 @@
+import tkinter
+
 import pyautogui as pg
-import wx
+from tkinter import *
 import os
 
-class main_window(wx.Frame):
-    def __init__(self):
 
-        wx.Frame.__init__(self, None, style=wx.TRANSPARENT_WINDOW,pos=(1080, 30))
-        panel = wx.Panel(self)
-        self.amount = 75
-        self.delta = -5
-        self.Show()
-        self.SetTransparent(self.amount)
+def open_window():
+    window = Tk()
+    window.title("Falsified")
+    s_width = window.winfo_screenwidth()
+    s_height = window.winfo_screenheight()
+
+    frame = Frame(window)
+    frame.pack()
+
+    check = Button(frame, text="Check Article")
+    check.pack(side=BOTTOM, padx=20, pady=30)
+
+    window.geometry('%dx%d+%d+%d' % (s_width / 5, s_height / 6, 1520, 150))
+    window.mainloop()
 
 
-app = wx.App(False)
-frame = main_window()
-app.MainLoop()
+open_window()
