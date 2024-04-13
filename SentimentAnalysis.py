@@ -5,7 +5,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
-class SentimentAnalyst:
+class CompareWebsites:
 
     def __init__(self):
         self.rake = Rake()
@@ -51,7 +51,13 @@ class SentimentAnalyst:
         return score,len (website_keywords), percent_score
 
     def compare_sentiment(self, website_text, reliable_text):
-        pass
+        scores = {}
+        website_sentiment = self.analyze_sentiment(website_text)
+        reliable_sentiment = self.analyze_sentiment(reliable_text)
+
+        for key in website_sentiment:
+            scores[key] = 100 - abs(round(website_sentiment[key] - reliable_sentiment[key], 4) * 100)
+        return scores
 
 
 textList = ['You can form a powerful keyword extraction method by '
@@ -60,7 +66,11 @@ textList = ['You can form a powerful keyword extraction method by '
             'It is a modified version of this algorithm. You can know '
             'more about rake-nltk here.Install the rake-nltk library '
             'using pip install rake-nltk.',
-            'First, we’ll import the necessary libraries for text analysis and sentiment analysis, such as pandas for data handling, nltk for natural language processing, and SentimentIntensityAnalyzer for sentiment analysis.']
-sentimentAnalyser = SentimentAnalyst()
+            'First, we’ll import the necessary libraries for text analysis and '
+            'sentiment analysis, such as pandas for data handling, nltk for '
+            'natural language processing, and SentimentIntensityAnalyzer for '
+            'sentiment analysis.']
+sentimentAnalyser = CompareWebsites()
 
-print(sentimentAnalyser.compare_keywords(textList[0], textList[1]))
+print(CompareWebsites.compare_sentiment(textList[0], textList[1]))
+print(CompareWebsites.compare_keywords(textList[0], textList[1]))
