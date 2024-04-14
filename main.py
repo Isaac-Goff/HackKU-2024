@@ -1,4 +1,6 @@
+import gui
+from gui import *
 
 if __name__ == "__main__":
-    print("hello World")
+    gui.open_window()
 
