@@ -38,10 +38,11 @@ class WebScraper:
 
         time.sleep(.75)
         self.driver.execute_script("window.scrollTo(0, 35000);")
-        time.sleep(.75)
-        link = self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div/div[2]/div/div/div/a")
-        print(link)
-        self.driver.get(link)
+        time.sleep(30)
+        self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div/div[2]/div/div/div/a").click()
+        altURL = self.driver.current_url
+        self.getKeywords(altURL)
+        self.getText(altURL)
 
     def scrapePage(self, altURL=''):
         try:
@@ -65,14 +66,10 @@ class WebScraper:
     def getText(self, altURL=''):
         cleaned_text = []
         soup = self.scrapePage(altURL if altURL != '' else self.userURL)
-
         for p in soup.findAll('p'):
             temp = p.get_text()
             cleaned_text.append(temp)
-        print(cleaned_text)
-
         finalText = ''.join(cleaned_text)
-        print(finalText)
         return finalText
 
     def getKeywords(self, altURL=''):
@@ -82,7 +79,6 @@ class WebScraper:
             self.userKeywords = keywords
         else:
             self.trustedKeywords = keywords
-        print(keywords)
         return keywords
 
     def getSentiment(self, altURL=''):
@@ -95,7 +91,9 @@ class WebScraper:
         return sentiment
 
     def compareKeywords(self):
-        return self.keywordGetter.compare_keywords(self.userKeywords, self.trustedKeywords)
+        uKeywords = ''.join(self.userKeywords)
+        tKeywords = ''.join(self.trustedKeywords)
+        return self.keywordGetter.compare_keywords(uKeywords, tKeywords)
 
     def compareSentiment(self):
         return self.keywordGetter.compare_sentiment(self.userSentiment, self.trustedSentiment)
@@ -103,4 +101,5 @@ class WebScraper:
 
 webscraper = WebScraper('https://www.foxnews.com/sports/joe-burrow-pro-taunting-im-not-gonna-get-my-feelings-hurt')
 webscraper.searchTrustedPage()
-
+print(webscraper.compareKeywords())
+print(webscraper.compareSentiment())
