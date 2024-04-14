@@ -34,16 +34,9 @@ def open_window():
     frame.pack()
 
     var = StringVar()
-    choice = IntVar()
     var.set("This is an application to test the trust of articles")
     response = Label(window, textvariable=var, borderwidth=4, relief="groove", wraplength=500, justify='center')
     response.pack(pady=40, padx=20)
-
-    r1 = Radiobutton(window, text="Sentiment Analysis", variable=choice, value=1)
-    r2 = Radiobutton(window, text="AI Sentiment", variable=choice, value=2)
-    choice.set(1)
-    r1.pack(anchor=W)
-    r2.pack(anchor=W)
 
     entry = Entry(window, width=40)
     entry.focus_set()
