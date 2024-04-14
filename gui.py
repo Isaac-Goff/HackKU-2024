@@ -7,6 +7,8 @@ import os
 
 def change_text(text, data="There is no data to check at this time"):
     text.set(str(data))
+
+
 def open_window():
     data = None
     window = Tk()
@@ -14,21 +16,21 @@ def open_window():
     window.title("Falsified")
     s_width = window.winfo_screenwidth()
     s_height = window.winfo_screenheight()
-    window.geometry('%dx%d+%d+%d' % (s_width / 5, s_height / 6, 1520, 150))
-    # window.resizable(False, False)s
+    window.geometry('%dx%d+%d+%d' % (s_width / 6, s_height / 4, 1565, 150))
+    # window.resizable(False, False)
 
     frame = Frame(window)
     frame.pack()
 
     var = StringVar()
     var.set("Hello World")
-    response = Label(window, textvariable=var)
-    check = Button(frame, text="Check Article", command=lambda : change_text(var))
-    close = Button(frame, text="Close", command=window.destroy)
+    response = Label(window, textvariable=var, borderwidth=4, relief="groove")
+    response.pack(pady=40, padx=20)
 
-    response.pack()
-    check.pack()
-    close.pack()
+    check = Button(frame, text="Check Article", command=lambda: change_text(var))
+    check.pack(pady=40)
+    close = Button(frame, text="Close", command=window.destroy)
+    close.pack(side=BOTTOM)
 
     window.protocol("WM_DELETE_WINDOW", 'disable_event')
     window.mainloop()
