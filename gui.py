@@ -10,6 +10,8 @@ def setSentiment(ent, url):
         return f"This is a good article. Score: {scrape.compareKeywords()}"
     elif scrape.compareKeywords() >= 60:
         return f"This article is OK. Score: {scrape.compareKeywords()}"
+    elif scrape.compareKeywords() == 0:
+        return f"No other articles on this topic found"
     else:
         return f"This is a bad article. Score: {scrape.compareKeywords()}"
 

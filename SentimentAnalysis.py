@@ -62,15 +62,3 @@ class CompareWebsites:
         return scores
 
 
-textList = ['You can form a powerful keyword extraction method by '
-            'combining the Rapid Automatic Keyword Extraction (RAKE) '
-            'algorithm with the NLTK toolkit. It is known as rake-nltk. '
-            'It is a modified version of this algorithm. You can know '
-            'more about rake-nltk here.Install the rake-nltk library '
-            'using pip install rake-nltk.',
-            'First, we’ll import the necessary libraries for text analysis and '
-            'sentiment analysis, such as pandas for data handling, nltk for '
-            'natural language processing, and SentimentIntensityAnalyzer for '
-            'sentiment analysis.']
-sentimentAnalyser = CompareWebsites()
-

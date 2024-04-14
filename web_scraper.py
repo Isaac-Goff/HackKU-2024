@@ -14,6 +14,7 @@ class WebScraper:
         self.trustedURL = 'https://www.bbc.com/search?q='
         self.userPage = requests.get(self.userURL)
         self.trustedPage = requests.get(self.trustedURL)
+        self.userTitle = ''
         self.userKeywords = ''
         self.userSentiment = ''
         self.trustedKeywords = ''
@@ -24,8 +25,10 @@ class WebScraper:
 
     def searchTrustedPage(self):
         keywords = self.getKeywords()
-        firstKeyword = ''.join(c for c in keywords[0].replace(' ', '%20'))
+        print(self.userTitle[0])
+        firstKeyword = ''.join(c for c in self.userTitle[0].replace(' ', '%20'))
         searchURL = self.trustedURL + firstKeyword
+        print(searchURL)
         self.goToURL(searchURL)
 
     def goToURL(self, searchURL):
@@ -61,6 +64,8 @@ class WebScraper:
         self.driver.execute_script("window.scrollTo(0, 35000);")
         time.sleep(.75)
         html = self.driver.page_source
+        title = self.driver.title
+        self.userTitle = self.keywordGetter.find_keywords(title)
         soup = BeautifulSoup(html, 'lxml')
         self.driver.close()
         return soup
