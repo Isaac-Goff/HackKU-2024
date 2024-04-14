@@ -1,4 +1,9 @@
 from tkinter import *
+from web_scraper import WebScraper as ws
+
+def setSentiment(url):
+    scrape = ws(url)
+    return ws.compareKeywords()
 
 
 def change_text(text, data="There is no data to check at this time"):
