@@ -20,7 +20,7 @@ class WebScraper:
     def searchTrustedPage(self):
         keywords = self.getKeywords()
 
-        firstKeyword = ''.join(c for c in keywords[0].replace(' ', '_') if c.isalpha())
+        firstKeyword = ''.join(c for c in keywords[0].replace(' ', '%20'))
         self.trustedURL += firstKeyword
         print(self.trustedURL)
 
@@ -28,9 +28,10 @@ class WebScraper:
 
     def scrapePage(self, altURL=''):
         try:
-            self.driver.current_url
+            temp = self.driver.current_url
         except:
-            self.driver = webdriver.Chrome
+            self.driver = webdriver.Chrome()
+
         if altURL == '':
             self.driver.get(self.userURL)
         else:
