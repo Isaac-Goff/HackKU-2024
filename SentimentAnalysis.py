@@ -72,5 +72,3 @@ textList = ['You can form a powerful keyword extraction method by '
             'sentiment analysis.']
 sentimentAnalyser = CompareWebsites()
 
-print(CompareWebsites.compare_sentiment(textList[0], textList[1]))
-print(CompareWebsites.compare_keywords(textList[0], textList[1]))
