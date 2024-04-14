@@ -4,11 +4,11 @@ import time
 from selenium.webdriver.common.by import By
 import requests
 from SentimentAnalysis import CompareWebsites
+from selenium.webdriver.chrome.options import Options
 
 class WebScraper:
 
     def __init__(self, userURL):
-        self.driver = webdriver.Chrome()
         self.keywordGetter = CompareWebsites()
         self.userURL = userURL
         self.trustedURL = 'https://www.bbc.com/search?q='
@@ -18,27 +18,26 @@ class WebScraper:
         self.userSentiment = ''
         self.trustedKeywords = ''
         self.trustedSentiment = ''
+        self.options = Options()
+        self.options.add_argument('--headless')
+        self.driver = webdriver.Chrome(options=self.options)
 
     def searchTrustedPage(self):
         keywords = self.getKeywords()
-
         firstKeyword = ''.join(c for c in keywords[0].replace(' ', '%20'))
         searchURL = self.trustedURL + firstKeyword
-        print(searchURL)
-
         self.goToURL(searchURL)
 
     def goToURL(self, searchURL):
         try:
             self.driver.current_url # Force exception to reload webdriver
         except:
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.Chrome(options=self.options)
 
         self.driver.get(searchURL)
-
         time.sleep(.75)
         self.driver.execute_script("window.scrollTo(0, 35000);")
-        time.sleep(30)
+        time.sleep(.75)
         try:
             self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div/div[2]/div/div/div/a").click()
             altURL = self.driver.current_url
@@ -51,12 +50,13 @@ class WebScraper:
         try:
             self.driver.current_url
         except:
-            self.driver = webdriver.Chrome()
+            self.driver = webdriver.Chrome(options=self.options)
 
         if altURL == '':
             self.driver.get(self.userURL)
         else:
             self.driver.get(altURL)
+
         time.sleep(.75)
         self.driver.execute_script("window.scrollTo(0, 35000);")
         time.sleep(.75)
