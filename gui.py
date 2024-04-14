@@ -1,9 +1,18 @@
 from tkinter import *
 from web_scraper import WebScraper as ws
 
-def setSentiment(url):
+
+def setSentiment(ent, url):
     scrape = ws(url)
-    return ws.compareKeywords()
+    scrape.searchTrustedPage()
+    ent.delete(0,'end')
+    if scrape.compareKeywords() >= 70:
+        return f"This is a good article. Score: {scrape.compareKeywords()}"
+    elif scrape.compareKeywords() >= 60:
+        return f"This article is OK. Score: {scrape.compareKeywords()}"
+    else:
+        return f"This is a bad article. Score: {scrape.compareKeywords()}"
+
 
 
 def change_text(text, data="There is no data to check at this time"):
@@ -14,7 +23,7 @@ def open_window():
     data = None
 
     window = Tk()
-    #window.attributes("-alpha", 0.4)
+    # window.attributes("-alpha", 0.4)
     window.title("Hack the Truth")
     s_width = window.winfo_screenwidth()
     s_height = window.winfo_screenheight()
@@ -40,12 +49,13 @@ def open_window():
     entry.focus_set()
     entry.pack()
 
-    check = Button(frame, text="Check Article", command=lambda: change_text(var, entry.get()))
+    check = Button(frame, text="Check Article", command=lambda: change_text(var, setSentiment(entry, entry.get())))
     check.pack(pady=40)
     close = Button(frame, text="Close", command=window.destroy)
     close.pack(side=BOTTOM)
 
     window.protocol("WM_DELETE_WINDOW", 'disable_event')
     window.mainloop()
+
 
 open_window()

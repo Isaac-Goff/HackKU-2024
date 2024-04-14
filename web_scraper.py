@@ -102,7 +102,7 @@ class WebScraper:
         return self.keywordGetter.compare_sentiment(self.userSentiment, self.trustedSentiment)
 
 
-webscraper = WebScraper('https://www.foxnews.com/us/maryland-garbage-collector-shot-to-death-on-job-police-searching-suspects')
-webscraper.searchTrustedPage()
-print(webscraper.compareKeywords())
-print(webscraper.compareSentiment())
+#webscraper = WebScraper('https://www.foxnews.com/us/maryland-garbage-collector-shot-to-death-on-job-police-searching-suspects')
+#webscraper.searchTrustedPage()
+#print(webscraper.compareKeywords())
+#print(webscraper.compareSentiment())
