@@ -39,10 +39,13 @@ class WebScraper:
         time.sleep(.75)
         self.driver.execute_script("window.scrollTo(0, 35000);")
         time.sleep(30)
-        self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div/div[2]/div/div/div/a").click()
-        altURL = self.driver.current_url
-        self.getKeywords(altURL)
-        self.getText(altURL)
+        try:
+            self.driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div/div[2]/div/div/div/a").click()
+            altURL = self.driver.current_url
+            self.getKeywords(altURL)
+            self.getText(altURL)
+        except:
+            print('No reliable stories on topic. Further research advised.')
 
     def scrapePage(self, altURL=''):
         try:
@@ -99,7 +102,7 @@ class WebScraper:
         return self.keywordGetter.compare_sentiment(self.userSentiment, self.trustedSentiment)
 
 
-webscraper = WebScraper('https://www.foxnews.com/sports/joe-burrow-pro-taunting-im-not-gonna-get-my-feelings-hurt')
+webscraper = WebScraper('https://www.foxnews.com/us/maryland-garbage-collector-shot-to-death-on-job-police-searching-suspects')
 webscraper.searchTrustedPage()
 print(webscraper.compareKeywords())
 print(webscraper.compareSentiment())

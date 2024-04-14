@@ -46,9 +46,11 @@ class CompareWebsites:
         for webword in website_keywords:
             if webword in reliable_keywords:
                 score += 1
-
-        percent_score = (score / len(website_keywords)) * 100
-        return score,len (website_keywords), percent_score
+        try:
+            percent_score = (score / len(website_keywords)) * 100
+            return percent_score
+        except ZeroDivisionError:
+            return 'No Webpage Found, Check Your Sources'
 
     def compare_sentiment(self, website_text, reliable_text):
         scores = {}
